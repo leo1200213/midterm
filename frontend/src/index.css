@@ -1,0 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+img {
+  width: 200px;
+}
+body {
+  background: linear-gradient(to bottom right, #005bea, #00c6fb);
+}
