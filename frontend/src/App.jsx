@@ -1,6 +1,10 @@
 import React from 'react';
+import services from "./services";
 
 function App() {
+  services.user.getAll().then((data) => {
+    console.log(data);
+  }); 
   return (
     <div className="bg-gray-100 h-screen flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">Hello, I'm Leo</h1>
