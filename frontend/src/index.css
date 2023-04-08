@@ -1,9 +1,12 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-img {
-  width: 200px;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.logo {
+  will-change: filter;
+  transition: filter 300ms;
 }
-body {
-  background: linear-gradient(to bottom right, #005bea, #00c6fb);
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
 }

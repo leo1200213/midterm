@@ -14,7 +14,6 @@ const app = express();
 
 app.use(express.static(frontendDir));
 
-app.use(express.json());
 
 
 if (process.env.NODE_ENV === "production") {
@@ -36,6 +35,7 @@ saveUninitialized: false,
 })
 );
 
+app.use(express.json());
 app.use(cookieParser());
 app.use(doubleCsrfProtection);
 app.use(csrfErrorHandler);
