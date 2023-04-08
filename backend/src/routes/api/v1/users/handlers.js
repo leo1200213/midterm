@@ -1,4 +1,5 @@
 import { prisma } from "../../../../adapters.js";
+import { generateToken } from "../../../../csrf.js";
 export async function getAllUsers(req, res) {
 const allUsers = await prisma.user.findMany();
 return res.json(allUsers);
@@ -22,3 +23,15 @@ export async function getOneUser(req, res) {
     if (user === null) return res.status(404).json({ error: "Not Found" });
     return res.json(user);
 }
+
+/**
+* @param {import('express').Request} req
+* @param {import('express').Response} res
+*/
+export async function getCsrfToken(req, res) {
+// we generate csrf secret based on session.id,
+// so token for userA won't work for userB
+const csrfToken = generateToken(res, req);
+req.session.init = true;
+res.json({ csrfToken });
+} 
