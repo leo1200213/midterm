@@ -8,6 +8,7 @@ import UserPage from "./pages/users.jsx";
 import CreateUserPage from "./pages/create-user.jsx";
 import Login from "./pages/login.jsx";
 import ErrorPage from "./pages/error-page.jsx";
+import Chat from "./pages/chat.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,9 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/create-user",
         element: <CreateUserPage />,
-      },      {
+      },     
+       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/chat",
+        element: <Chat />,
       },
     ],
   },

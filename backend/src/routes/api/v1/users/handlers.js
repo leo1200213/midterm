@@ -34,7 +34,7 @@ export async function login(req, res) {
         console.log(req.body)
         res.id = user.id;
         //next();
-        return res.json(user.id)
+        return res.json(user)
     }
 
 }

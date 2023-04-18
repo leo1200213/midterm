@@ -6,6 +6,7 @@ import services from "../services";
 function Login() {
   const [formData, setFormData] = useState({ username: "" , pwd:""});
   const [message, setMessage] = useState("");
+  const [islogin, setapple] = useState();
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
   const handleTextInputChange = ({ target: { name, value } }) => {
@@ -23,8 +24,17 @@ function Login() {
     event.preventDefault();
     const data = await services.auth.login(formData);
     console.log(data);
-  };
+    setapple(data);
+    if(data.error)
+    {
+      setapple(data.error);
 
+    }
+  };
+ // console.log(islogin);
+  if (!islogin)
+  {
+ // console.log(islogin);
   return (
     <>
       {/*
@@ -35,6 +45,7 @@ function Login() {
         <body class="h-full">
         ```
       */}
+
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
@@ -94,6 +105,12 @@ function Login() {
       <pre>{message}</pre>
     </>
   );
+}
+else{
+
+  return <h1>logged.</h1>;
+}
+
 }
 
 export default Login;
