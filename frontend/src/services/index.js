@@ -4,7 +4,7 @@ import api from "./axiosClient";
 
 const services = {
     auth,
-user,
+    user,
 };
 api.interceptors.request.use(
   async (config) => {
