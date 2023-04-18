@@ -1,12 +1,23 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import services from "../services";
+import React, { useEffect } from 'react';
+
 
 // you should design your register page and api
 function Login() {
   const [formData, setFormData] = useState({ username: "" , pwd:""});
   const [message, setMessage] = useState("");
-  const [islogin, setapple] = useState();
+  const [islogin, setlogin] = useState("");
+  const [userdata, setuserdata] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken'); // Get the token from localStorage
+    if (token) {
+      setlogin(token); // Set the "islogin" state variable to the token value
+    }
+  }, []); // Run this effect only once when the component mounts
+
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
   const handleTextInputChange = ({ target: { name, value } }) => {
@@ -23,17 +34,30 @@ function Login() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const data = await services.auth.login(formData);
-    console.log(data);
-    setapple(data);
+    
+    const token = localStorage.getItem('jwtToken');
+    //setlogin(data.token);
+    //setMessage(JSON.stringify(data, null, 2));
+    setlogin(!!token);
+    setuserdata(data.user.name);
+    
     if(data.error)
     {
-      setapple(data.error);
+      setlogin(data.error);
+      return ;
 
     }
   };
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken'); // Remove the token from localStorage
+    setlogin(""); // Update the "islogin" state variable to an empty string
+  }
  // console.log(islogin);
+ console.log(islogin)
+
   if (!islogin)
   {
+    
  // console.log(islogin);
   return (
     <>
@@ -108,7 +132,20 @@ function Login() {
 }
 else{
 
-  return <h1>logged.</h1>;
+  return(
+    <>
+      <div>
+
+        <div>
+          <p>You are logged in</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+
+    </div>
+      
+    </>
+  );
+  
 }
 
 }

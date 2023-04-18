@@ -42,7 +42,7 @@ app.use(csrfErrorHandler);
 app.use(rootRouter); 
 
 app.get("/visit", (req, res) => {
-    console.log(req.session);
+    //console.log(req.session);
     if (typeof req.session.view === "number") {
     req.session.view++;
     } else {

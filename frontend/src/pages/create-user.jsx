@@ -25,6 +25,7 @@ function CreateUserPage() {
     });
     setFormData({ username: "" });
     setFormData({ pwd: "" });
+    console.log(message)
     event.preventDefault();
   };
 

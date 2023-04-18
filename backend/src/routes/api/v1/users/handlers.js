@@ -1,9 +1,16 @@
 import { prisma } from "../../../../adapters.js";
 import { generateToken } from "../../../../csrf.js";
+import jwt from 'jsonwebtoken';
 export async function getAllUsers(req, res) {
 const allUsers = await prisma.user.findMany();
 return res.json(allUsers);
 } 
+function generateToken2(userId) {
+    const payload = { userId };
+    const secret = 'your-secret-key';
+    const options = { expiresIn: '1h' };
+    return jwt.sign(payload, secret, options);
+}
 /**
 * @param {import('express').Request} req
 * @param {import('express').Response} res
@@ -19,7 +26,7 @@ export async function createOneUser(req, res) {
 * @param {import('express').Response} res
 */
 export async function login(req, res) {
-    const {username, pwd } = req.body;
+    const {id,username, pwd } = req.body;
     //console.log(req.body);
     ///console.log(username)
     const user = await prisma.user.findUnique({ where: {name:username} });
@@ -31,10 +38,14 @@ export async function login(req, res) {
     }
     else {
         //req.session.name = req.body.name;
-        console.log(req.body)
+        const token =  generateToken2(id)
+        //res.header('Authorization', `Bearer ${token}`);
+        //res.json({ message: 'Login successful' });
         res.id = user.id;
+        //console.log(res)
+  
         //next();
-        return res.json(user)
+        return res.json({user,token})
     }
 
 }

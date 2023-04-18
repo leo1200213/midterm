@@ -9,6 +9,7 @@ const navigation = [
   { name: "Users", href: "/users" },
   { name: "Create User", href: "/create-user" },
   { name: "Login", href: "/login" },
+  { name: "Chat", href: "/chat" },
 ];
 
 function classNames(...classes) {
@@ -183,7 +184,7 @@ export function RootIndex() {
   return (
     <div className="my-16">
       <div className="flex justify-center my-4">
-        <h1 className="text-4xl block">Welcome</h1>
+        <h1 className="text-4xl blßock">Welcome</h1>
       </div>
       <div className="flex justify-center">
         <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank">

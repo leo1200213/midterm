@@ -9,8 +9,9 @@ export const auth = {
   },
   async login(formData) {
     try{
-      const { data } = await api.post("/users/login", formData); 
-      //localStorage.setItem("jwtToken", data.token);
+      const { data, token } = await api.post("/users/login", formData); 
+      localStorage.setItem("jwtToken", token);
+      localStorage.setItem("ID", data.id);
       return data
   }
     catch(e){
