@@ -15,6 +15,7 @@ function CreateUserPage() {
       ...prev,
       [name]: value,
     }));
+    console.log(name,"  " ,value)
   };
 
   /** @type {React.FormEventHandler<HTMLFormElement>} */
