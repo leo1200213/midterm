@@ -8,11 +8,13 @@ export const auth = {
     return { csrfToken };
   },
   async login(formData) {
-
-      const { data } = await api.post("/users/login", formData) ; 
+    try{
+      const { data } = await api.post("/users/login", formData); 
       //localStorage.setItem("jwtToken", data.token);
-      localStorage.setItem("userID", data.id);
       return data
-
-}
+  }
+    catch(e){
+      return e.response.data;
+    }
+  },
 };

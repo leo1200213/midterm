@@ -22,6 +22,7 @@ function Login() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const data = await services.auth.login(formData);
+    console.log(data);
   };
 
   return (

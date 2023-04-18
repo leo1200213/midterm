@@ -9,6 +9,7 @@ return res.json(allUsers);
 * @param {import('express').Response} res
 */
 export async function createOneUser(req, res) {
+    ///console.log(username)
     const user = await prisma.user.create({ data: { name: req.body.name,
                                                     pwd: req.body.pwd} });
     return res.status(201).json(user);
@@ -17,22 +18,23 @@ export async function createOneUser(req, res) {
 * @param {import('express').Request} req
 * @param {import('express').Response} res
 */
-export async function login(req, res, next) {
-    const {username, password } = req.body;
-    console.log(username)
-    const user = await prisma.user.findUnique({ where: { name:username} });
+export async function login(req, res) {
+    const {username, pwd } = req.body;
+    //console.log(req.body);
+    ///console.log(username)
+    const user = await prisma.user.findUnique({ where: {name:username} });
     if (user === null)
         return res.status(404).json({error: "Invalid username or password"})
-    else if (user.pwd !== password){
+    else if (user.pwd !== pwd){
        // console.log(user.pwd)
         return res.status(404).json({error: "Invalid username or password"})
     }
     else {
-        req.session.name = req.body.name;
-        console.log(req.session)
+        //req.session.name = req.body.name;
+        console.log(req.body)
         res.id = user.id;
-        next()
-        
+        //next();
+        return res.json(user.id)
     }
 
 }
