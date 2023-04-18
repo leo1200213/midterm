@@ -17,6 +17,38 @@ export async function createOneUser(req, res) {
 * @param {import('express').Request} req
 * @param {import('express').Response} res
 */
+export async function login(req, res, next) {
+    const {username, password } = req.body;
+    console.log(username)
+    const user = await prisma.user.findUnique({ where: { name:username} });
+    if (user === null)
+        return res.status(404).json({error: "Invalid username or password"})
+    else if (user.pwd !== password){
+       // console.log(user.pwd)
+        return res.status(404).json({error: "Invalid username or password"})
+    }
+    else {
+        req.session.name = req.body.name;
+        console.log(req.session)
+        res.id = user.id;
+        next()
+        
+    }
+
+}
+/**
+* @param {import('express').Request} req
+* @param {import('express').Response} res
+*/
+export async function login(req, res) {
+    const user = await prisma.user.create({ data: { name: req.body.name,
+                                                    pwd: req.body.pwd} });
+    return res.status(201).json(user);
+}
+/**
+* @param {import('express').Request} req
+* @param {import('express').Response} res
+*/
 export async function getOneUser(req, res) {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
