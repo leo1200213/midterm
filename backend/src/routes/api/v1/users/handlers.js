@@ -36,15 +36,7 @@ export async function login(req, res, next) {
     }
 
 }
-/**
-* @param {import('express').Request} req
-* @param {import('express').Response} res
-*/
-export async function login(req, res) {
-    const user = await prisma.user.create({ data: { name: req.body.name,
-                                                    pwd: req.body.pwd} });
-    return res.status(201).json(user);
-}
+
 /**
 * @param {import('express').Request} req
 * @param {import('express').Response} res

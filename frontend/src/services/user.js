@@ -8,4 +8,6 @@ async createOne({ name, pwd }) {
     const { data } = await api.post("/users", { name ,pwd });
     return data;
   },
+
 };
+
