@@ -4,6 +4,7 @@ import services from "../services";
 
 // you should design your register page and api
 function CreateUserPage() {
+  const [image, setImage] = useState("")
   const [formData, setFormData] = useState({ username: "" , pwd:""});
   const [message, setMessage] = useState("");
 
@@ -17,17 +18,56 @@ function CreateUserPage() {
     }));
     console.log(name,"  " ,value)
   };
+  /** @type {React.ChangeEventHandler<HTMLInputElement>} */
+  const handlePicChange = (e) => {
+    const file = e.target.files[0];
+    const img = new Image();
+    const reader = new FileReader();
+    img.onload = () =>{
+      const resizedimg = resizeImage(img,100,100);
+      console.log(resizedimg);
+      setImage(resizedimg);
+    }
 
+    reader.onload = (e)=>{
+
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+   /* var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () =>{
+      setImage(JSON.stringify(reader.result))
+    }
+    reader.onerror = error =>{
+      console.log("Error:",error);
+    }*/
+  };
+  const resizeImage = (image, maxw, maxh) =>
+  {
+    const img = image;
+    const canvas = document.createElement("canvas");
+    const ratio = Math.min(maxw/img.width, maxh/img.height);
+    canvas.width = img.width*ratio;
+    canvas.height = img.height*ratio;  
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL(img.type);
+
+  }
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    services.user.createOne({ name: formData.username , pwd: formData.pwd }).then((data) => {
+    services.user.createOne({ name: formData.username , pwd: formData.pwd, img:JSON.stringify(image) }).then((data) => {
       setMessage(JSON.stringify(data, null, 2));
     });
     setFormData({ username: "" });
     setFormData({ pwd: "" });
+    setFormData({img: ""});
     console.log(message)
     event.preventDefault();
   };
+
 
   return (
     <>
@@ -74,6 +114,12 @@ function CreateUserPage() {
                   placeholder="pwd"
                   value={formData.pwd}
                   onChange={handleTextInputChange}
+                />
+                <input
+                  name="img"
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  onChange={handlePicChange}
                 />
               </div>
             </div>

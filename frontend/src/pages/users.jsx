@@ -10,7 +10,7 @@ function UserPage() {
   }, []);
   return (
     <div>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
+      <pre>{JSON.stringify(users.id, null, 2)}</pre>
     </div>
   );
 }

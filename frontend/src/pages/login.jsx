@@ -9,10 +9,11 @@ function Login() {
   const [formData, setFormData] = useState({ username: "" , pwd:""});
   const [message, setMessage] = useState("");
   const [islogin, setlogin] = useState("");
-  const [userdata, setuserdata] = useState("");
+  const [userdata, setuserdata] = useState({username:"",pwd:"",image:""});
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken'); // Get the token from localStorage
+    //const [userdata, setuserdata] = useState({username:"",pwd:"",image:""});
     if (token) {
       setlogin(token); // Set the "islogin" state variable to the token value
     }
@@ -36,24 +37,38 @@ function Login() {
     const data = await services.auth.login(formData);
     
     const token = localStorage.getItem('jwtToken');
+    const getid = localStorage.getItem('callid');
+    const getname = localStorage.getItem('callname');
+    const getpwd = localStorage.getItem('callpwd');
+    const getimg = localStorage.getItem('callimg');
+    //console.log(getimg)
     //setlogin(data.token);
     //setMessage(JSON.stringify(data, null, 2));
+    //console.log(data.name)
     setlogin(!!token);
-    setuserdata(data.user.name);
+    //console.log(getdata.id)
+    setuserdata({
+      ...userdata,
+      username: getname,
+      pwd: getpwd ,
+      image: getimg
+    });
     
-    if(data.error)
-    {
-      setlogin(data.error);
+    //if(data.error)
+    //{
+ //     setlogin(data.error);
       return ;
-
-    }
+//
+   // }
   };
   const handleLogout = () => {
-    localStorage.removeItem('jwtToken'); // Remove the token from localStorage
+    localStorage.removeItem('jwtToken'); 
+    localStorage.getItem('data'); // Remove the token from localStorage
     setlogin(""); // Update the "islogin" state variable to an empty string
+    setuserdata({username:"",pwd:"",image:""});
   }
- // console.log(islogin);
- console.log(islogin)
+ //console.log(islogin);
+ console.log(userdata.image)
 
   if (!islogin)
   {
@@ -137,8 +152,9 @@ else{
       <div>
 
         <div>
-          <p>You are logged in</p>
+        <img src={userdata.image} border="0"/>
           <button onClick={handleLogout}>Logout</button>
+          
         </div>
 
     </div>

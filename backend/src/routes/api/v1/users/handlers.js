@@ -16,9 +16,11 @@ function generateToken2(userId) {
 * @param {import('express').Response} res
 */
 export async function createOneUser(req, res) {
-    ///console.log(username)
+    console.log(req.body)
     const user = await prisma.user.create({ data: { name: req.body.name,
-                                                    pwd: req.body.pwd} });
+                                                    pwd: req.body.pwd,
+                                                    img: req.body.img
+                                                } });
     return res.status(201).json(user);
 }
 /**
@@ -42,8 +44,8 @@ export async function login(req, res) {
         //res.header('Authorization', `Bearer ${token}`);
         //res.json({ message: 'Login successful' });
         res.id = user.id;
-        //console.log(res)
-  
+        //console.log(token)
+        console.log(user);
         //next();
         return res.json({user,token})
     }
