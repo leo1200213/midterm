@@ -141,7 +141,7 @@ function CreateUserPage() {
           </form>
         </div>
       </div>
-      <pre>{message}</pre>
+      <pre></pre>
     </>
   );
 }

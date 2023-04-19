@@ -16,7 +16,7 @@ function generateToken2(userId) {
 * @param {import('express').Response} res
 */
 export async function createOneUser(req, res) {
-    console.log(req.body)
+    //console.log(req.body)
     const user = await prisma.user.create({ data: { name: req.body.name,
                                                     pwd: req.body.pwd,
                                                     img: req.body.img
@@ -45,7 +45,7 @@ export async function login(req, res) {
         //res.json({ message: 'Login successful' });
         res.id = user.id;
         //console.log(token)
-        console.log(user);
+        //console.log(user);
         //next();
         return res.json({user,token})
     }

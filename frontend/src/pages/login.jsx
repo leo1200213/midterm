@@ -12,10 +12,20 @@ function Login() {
   const [userdata, setuserdata] = useState({username:"",pwd:"",image:""});
 
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken'); // Get the token from localStorage
+    const token = localStorage.getItem('jwtToken');
+    const getid = localStorage.getItem('callid');
+    const getname = localStorage.getItem('callname');
+    const getpwd = localStorage.getItem('callpwd');
+    const getimg = localStorage.getItem('callimg'); // Get the token from localStorage
     //const [userdata, setuserdata] = useState({username:"",pwd:"",image:""});
     if (token) {
       setlogin(token); // Set the "islogin" state variable to the token value
+      setuserdata({
+        ...userdata,
+        username: getname,
+        pwd: getpwd ,
+        image: getimg
+      });
     }
   }, []); // Run this effect only once when the component mounts
 
@@ -68,7 +78,7 @@ function Login() {
     setuserdata({username:"",pwd:"",image:""});
   }
  //console.log(islogin);
- console.log(userdata.image)
+ //console.log(userdata.image)
 
   if (!islogin)
   {
@@ -153,7 +163,20 @@ else{
 
         <div>
         <img src={userdata.image} border="0"/>
-          <button onClick={handleLogout}>Logout</button>
+        <h3>Username:{userdata.username}</h3>
+        <button onClick={handleLogout}
+                type="submit"
+                className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <LockClosedIcon
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    aria-hidden="true"
+                  />
+                </span>
+                Logout
+              </button>
+
           
         </div>
 
